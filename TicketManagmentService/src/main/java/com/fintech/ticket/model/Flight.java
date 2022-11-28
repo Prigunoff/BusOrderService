@@ -30,7 +30,4 @@ public class Flight {
     @OneToMany(mappedBy = "flight_plan",cascade = CascadeType.REMOVE)
     private List<Ticket> tickets;
 
-    public Integer getAvailableTickets() {
-        return availableTickets = tickets.size();
-    }
 }
