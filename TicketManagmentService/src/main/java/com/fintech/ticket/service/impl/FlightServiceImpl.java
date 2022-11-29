@@ -4,6 +4,8 @@ import com.fintech.ticket.exceptions.NullEntityReferenceException;
 import com.fintech.ticket.model.Flight;
 import com.fintech.ticket.repository.FlightRepository;
 import com.fintech.ticket.service.FlightService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("flightServiceImpl")
+@AllArgsConstructor
 public class FlightServiceImpl implements FlightService {
 
     private FlightRepository flightRepository;
-
-    @Autowired
-    public FlightServiceImpl(FlightRepository flightRepository) {
-        this.flightRepository = flightRepository;
-    }
-
     @Override
     public Flight createFlight(Flight flight) {
         if (flight != null) {
@@ -52,7 +49,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<Flight> getAllFlights() {
-        List<Flight> allFlights = flightRepository.findAll();
+        List<Flight> allFlights = flightRepository.getAllById();
         return allFlights.isEmpty() ? new ArrayList<>() : allFlights;
     }
 }

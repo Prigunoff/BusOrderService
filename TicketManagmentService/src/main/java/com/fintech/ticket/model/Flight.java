@@ -1,6 +1,8 @@
 package com.fintech.ticket.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.extern.java.Log;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
@@ -18,7 +20,7 @@ import java.util.List;
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "from_city", nullable = false)
     private String fromCity;
     @Column(name = "to_city", nullable = false)
@@ -26,7 +28,9 @@ public class Flight {
     @Column(name = "train_start_time")
     private LocalDateTime trainStartTime;
     @Column(name = "available_tickets", nullable = false)
+
     private Integer availableTickets;
+    @JsonIgnore
     @OneToMany(mappedBy = "flight_plan",cascade = CascadeType.REMOVE)
     private List<Ticket> tickets;
 
