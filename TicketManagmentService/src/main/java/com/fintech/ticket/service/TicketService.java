@@ -1,6 +1,5 @@
 package com.fintech.ticket.service;
 
-import com.fintech.ticket.model.Flight;
 import com.fintech.ticket.model.Ticket;
 
 import java.util.List;
