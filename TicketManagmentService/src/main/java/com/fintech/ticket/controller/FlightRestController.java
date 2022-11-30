@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @AllArgsConstructor
@@ -18,7 +15,10 @@ import java.util.List;
 @RequestMapping(value = "api/flight")
 public class FlightRestController {
     private final FlightService flightService;
-
+    @PostMapping
+    public ResponseEntity<Flight> createFlight(@RequestBody Flight flight){
+        return new ResponseEntity<>(flightService.createFlight(flight),HttpStatus.CREATED);
+    }
     @GetMapping("{id}")
     public  ResponseEntity<Flight> getOneFlight(@PathVariable("id") Long flId){
         return new ResponseEntity<>(flightService.readByFlightId(flId),HttpStatus.OK);

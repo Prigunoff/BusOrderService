@@ -5,11 +5,10 @@ import com.fintech.ticket.model.Flight;
 import com.fintech.ticket.repository.FlightRepository;
 import com.fintech.ticket.service.FlightService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Flight createFlight(Flight flight) {
         if (flight != null) {
+            flight.setTrainStartTime(LocalDateTime.now().plusDays(31));
             flightRepository.save(flight);
             return flight;
         }
