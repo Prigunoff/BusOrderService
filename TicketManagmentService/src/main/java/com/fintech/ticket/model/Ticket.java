@@ -16,9 +16,11 @@ import javax.persistence.*;
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    private Long id;
+    private String firstName;
+    private String lastName;
     @ManyToOne
     @JoinColumn(name = "flight_plan_id")
     private Flight flight_plan;
+
 }
