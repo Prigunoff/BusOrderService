@@ -7,7 +7,7 @@ public enum State {
     private static final Random RNG = new Random();
 
     public static State randomStatus()  {
-        State[] directions = values();
-        return directions[RNG.nextInt(directions.length)];
+        State[] states = values();
+        return states[RNG.nextInt(states.length)];
     }
 }

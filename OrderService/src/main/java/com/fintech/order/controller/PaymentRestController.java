@@ -1,6 +1,5 @@
 package com.fintech.order.controller;
 
-import com.fintech.order.enums.State;
 import com.fintech.order.model.Payment;
 import com.fintech.order.service.PaymentService;
 import com.fintech.order.utils.PaymentStatusDto;
@@ -22,16 +21,14 @@ public class PaymentRestController {
     }
     @PostMapping("/process")
     public ResponseEntity<Payment> depositMoneyForPayment(@RequestBody Payment payment){
-        Payment payment1 = paymentService.readByLastName(payment.getLastName());
-        payment1.setMoney(payment.getMoney());
-        payment1.setPaymentStatus(State.randomStatus());
-        paymentService.updatePayment(payment1);
-        return new ResponseEntity<>(payment1,HttpStatus.OK);
+        return new ResponseEntity<>(paymentService.updatePayment(payment),HttpStatus.OK);
     }
     @GetMapping("/info/{id}")
     public ResponseEntity<PaymentStatusDto> getStatusOfPayment(@PathVariable("id") Long paymentId){
         Payment payment = paymentService.readByPaymentId(paymentId);
         PaymentStatusDto paymentStatus = paymentService.mapToDto(payment);
+        log.info("PaymentController:GET:getStatusOfPayment(): Getting status for payment id: " + payment.getId()
+                + ", Status: " + paymentStatus.getStatus());
         return new ResponseEntity<>(paymentStatus,HttpStatus.OK);
     }
 }

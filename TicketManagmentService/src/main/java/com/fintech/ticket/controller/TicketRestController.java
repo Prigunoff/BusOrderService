@@ -1,6 +1,5 @@
 package com.fintech.ticket.controller;
 
-import com.fintech.ticket.model.Flight;
 import com.fintech.ticket.model.Ticket;
 import com.fintech.ticket.service.FlightService;
 import com.fintech.ticket.service.TicketService;
@@ -29,7 +28,9 @@ public class TicketRestController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Ticket>> getAllTickets() {
-        return new ResponseEntity<>(ticketService.getAllTickets(), HttpStatus.OK);
+        List<Ticket> tickets = ticketService.getAllTickets();
+        log.info("TicketController:GET:/all has been reached");
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
@@ -44,24 +45,22 @@ public class TicketRestController {
 
         responseDto.setTicket(ticket);
         responseDto.setPaymentStatus(paymentStatus);
+        log.info("TicketController:GET:getOneTicket():Reading info about ticket. Id: " + ticket.getId());
+
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @PostMapping("{id}")
     public ResponseEntity<TicketDTO> createTicketForFlight(@PathVariable("id") Long flightId, @RequestBody Ticket ticket) {
-        Flight flight = flightService.readByFlightId(flightId);
         TicketDTO ticketDTO = new TicketDTO();
-        if (flight.getAvailableTickets() <= 0) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        flight.setAvailableTickets(flight.getAvailableTickets() - 1);
-        flightService.updateFlight(flight);
+        flightService.updateFlight(flightService.readByFlightId(flightId));
 
         ticket.setFlight_plan(flightService.readByFlightId(flightId));
         ticketService.createTicket(ticket);
         ticketDTO.setId(ticket.getId());
-        restTemplate.postForEntity(UrlLinks.SEND_CREATE_PAYMENT, ticket, Ticket.class); //Sends post to Payment controller with data from ticket
 
+        log.info("Created ticket with id: " + ticket.getId()
+                + " ,for flight id: " + flightService.readByFlightId(flightId).getId());
         return new ResponseEntity<>(ticketDTO, HttpStatus.OK);
     }
 }

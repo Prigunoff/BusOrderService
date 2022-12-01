@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @JsonSerialize(using = PaymentSerializer.class)
 @AllArgsConstructor
@@ -29,7 +30,7 @@ public class Payment {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "money_deposit")
-    private Long money;
+    private BigDecimal money;
 
 
 }

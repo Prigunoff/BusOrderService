@@ -1,5 +1,6 @@
 package com.fintech.order.service.impl;
 
+import com.fintech.order.enums.State;
 import com.fintech.order.exceptions.NullEntityReferenceException;
 import com.fintech.order.model.Payment;
 import com.fintech.order.repository.PaymentRepository;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
 
 @Service("paymentServiceImpl")
 @AllArgsConstructor
@@ -18,6 +20,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment createPayment(Payment payment) {
         if (payment != null) {
+            payment.setMoney(BigDecimal.valueOf(0));
             paymentRepository.save(payment);
             return payment;
         }
@@ -34,7 +37,11 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment updatePayment(Payment payment) {
         if (payment != null) {
-            return paymentRepository.save(payment);
+            Payment payment1 = readByLastName(payment.getLastName());
+            payment1.setMoney(payment.getMoney());
+            payment1.setPaymentStatus(State.randomStatus());
+            paymentRepository.saveAndFlush(payment1);
+            return payment1;
         }
         throw new NullEntityReferenceException("Payment cannot be 'null'.");
     }

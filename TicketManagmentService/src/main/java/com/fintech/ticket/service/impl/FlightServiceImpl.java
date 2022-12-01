@@ -17,6 +17,7 @@ import java.util.List;
 public class FlightServiceImpl implements FlightService {
 
     private FlightRepository flightRepository;
+
     @Override
     public Flight createFlight(Flight flight) {
         if (flight != null) {
@@ -36,10 +37,17 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Flight updateFlight(Flight flight) {
-        if (flight != null){
-            return flightRepository.save(flight);
+        if (flight != null) {
+            Flight flight1 = flightRepository.getById(flight.getId());
+            if (flight1.getAvailableTickets() <= 0) {
+                throw new NullEntityReferenceException("Tickets out of stock");
+            }
+            flight1.setAvailableTickets(flight1.getAvailableTickets() - 1);
+            flightRepository.saveAndFlush(flight1);
+
+            return flight1;
         }
-            throw new NullEntityReferenceException("Flight cannot be 'null'.");
+        throw new NullEntityReferenceException("Flight cannot be 'null'.");
     }
 
     @Override
