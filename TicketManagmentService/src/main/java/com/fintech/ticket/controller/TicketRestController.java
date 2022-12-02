@@ -59,8 +59,6 @@ public class TicketRestController {
         ticketService.createTicket(ticket);
         ticketDTO.setId(ticket.getId());
 
-//        log.info("Created ticket with id: " + ticket.getId()
-//                + " ,for flight id: " + flightService.readByFlightId(flightId).getId());
         log.info("Created ticket with id: {}" + " ,for flight id: {}",ticket.getId(),flightService.readByFlightId(flightId).getId());
         return new ResponseEntity<>(ticketDTO, HttpStatus.OK);
     }
