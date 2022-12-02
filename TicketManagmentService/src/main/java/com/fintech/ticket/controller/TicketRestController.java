@@ -26,7 +26,7 @@ public class TicketRestController {
     private RestTemplate restTemplate;
 
 
-    @GetMapping("/all")
+    @GetMapping("/admin/all")
     public ResponseEntity<List<Ticket>> getAllTickets() {
         List<Ticket> tickets = ticketService.getAllTickets();
         log.info("TicketController:GET:/all has been reached");
