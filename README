@@ -1,0 +1,52 @@
+Unfortunately I haven't found the idea how to develop status handler(
+Connection to DB can be override to use Docker, but I just made without docker.
+--
+Start app:
+    Run: OrderServiceApplication and TicketManagementService
+--
+Collection of requests can be fond here, just import to postman:
+https://api.postman.com/collections/23160556-36e9e5b2-6ef9-4dc7-a474-16160fc1ff2b?access_key=PMAT-01GK7216TSX5FWAT82NV2FDED0
+
+Also will link them here just for comfort:
+
+   _Flight_
+createTrainFlight:
+POST : http://localhost:8080/api/admin/flight
+{
+    "fromCity" : "Kyiv",
+    "toCity" : "London",
+    "availableTickets" : 35
+}
+
+getFlightById:
+GET : http://localhost:8080/api/admin/flight/{id}
+
+getAllFlights:
+GET : http://localhost:8080/api/admin/flight/all
+
+getAllInfoAboutFlight:
+GET : http://localhost:8080/api/flight/ticket/{ticketId}
+
+DeleteFlightById:
+DELETE : http://localhost:8080/api/admin/flight/{flightId}
+
+    _Ticket_
+createTicketForFlight:
+POST: localhost:8080/api/flight/ticket/{flightId}
+{
+    "firstName" : "Qr",
+    "lastName" : "Cat"
+}
+
+payForTicket:
+POST: http://localhost:8081/api/payment/process
+{
+    "firstName":"QR",
+    "lastName" : "Cat",
+    "money": 150
+}
+
+    _PaymentStatus_
+getPaymentStatus:
+GET : http://localhost:8081/api/payment/info/{paymentId}
+

@@ -27,8 +27,8 @@ public class PaymentRestController {
     public ResponseEntity<PaymentStatusDto> getStatusOfPayment(@PathVariable("id") Long paymentId){
         Payment payment = paymentService.readByPaymentId(paymentId);
         PaymentStatusDto paymentStatus = paymentService.mapToDto(payment);
-        log.info("PaymentController:GET:getStatusOfPayment(): Getting status for payment id: " + payment.getId()
-                + ", Status: " + paymentStatus.getStatus());
+        log.info("PaymentController:GET:getStatusOfPayment(): Getting status for payment id: {}"
+                + ", Status:{} ",payment.getId(),paymentStatus.getStatus());
         return new ResponseEntity<>(paymentStatus,HttpStatus.OK);
     }
 }

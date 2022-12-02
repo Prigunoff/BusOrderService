@@ -45,7 +45,7 @@ public class TicketRestController {
 
         responseDto.setTicket(ticket);
         responseDto.setPaymentStatus(paymentStatus);
-        log.info("TicketController:GET:getOneTicket():Reading info about ticket. Id: " + ticket.getId());
+        log.info("TicketController:GET:getOneTicket():Reading info about ticket. Id: {}",ticket.getId());
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -59,8 +59,9 @@ public class TicketRestController {
         ticketService.createTicket(ticket);
         ticketDTO.setId(ticket.getId());
 
-        log.info("Created ticket with id: " + ticket.getId()
-                + " ,for flight id: " + flightService.readByFlightId(flightId).getId());
+//        log.info("Created ticket with id: " + ticket.getId()
+//                + " ,for flight id: " + flightService.readByFlightId(flightId).getId());
+        log.info("Created ticket with id: {}" + " ,for flight id: {}",ticket.getId(),flightService.readByFlightId(flightId).getId());
         return new ResponseEntity<>(ticketDTO, HttpStatus.OK);
     }
 }
